@@ -7,32 +7,21 @@ const app = express();
 // Set 'port' value to either an environment value PORT or 3000
 app.set('port', process.env.PORT || 3000);
 
-// Create router
-//var router = require('./router');
-
 // Router listens on / (root)
-//app.use('/', router);
-app.use(express.static('app'));
-app.get('/',function(req,res){
-    res.sendFile(path.join(__dirname+'/app/views/'+'index.html'));
-})
+var route = require('./router');
+app.use('/', route);
 
-app.get('/register',function(req,res){
-    res.sendFile(path.join(__dirname+'/app/views/'+'register.html'));
-})
-
-app.get('/login',function(req,res){
-    res.sendFile(path.join(__dirname+'/app/views/'+'login.html'));
-})
-
-app.get('/reset',function(req,res){
-    res.sendFile(path.join(__dirname+'/app/views/'+'reset.html'));
-})
-
-app.get('/chatbox',function(req,res){
-    res.sendFile(path.join(__dirname+'/app/views/'+'chatbox.html'));
-})
-
+/*
+const MongoClient = require('mongodb').MongoClient;
+//const url = "mongodb+srv://RajGM:GauraV@123todatabase@cluster0.mwzax.mongodb.net/capstonehackmsg?retryWrites=true&w=majority";
+var url = "mongodb://localhost:3000/mydb";
+MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    console.log("Database created!");
+    db.close();
+  });
+*/
+//mongo "mongodb+srv://cluster0.mwzax.mongodb.net/capstonehackmsg" --username RajGM
 // Connect to the database, then execute the "callback" function (in this case an anonymous function which starts listening for requests).
     // Start listening for requests on the port defined earlier
 app.listen(app.get('port'), function(){
