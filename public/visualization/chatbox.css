@@ -1,0 +1,15 @@
+#contactsMenu{
+ border: 1px solid black;
+ height: 200px;
+ width: 200px;   
+}
+
+#chatMenu{
+    border: 1px solid red;
+    height: 200px;
+    width: 200px;
+}
+
+div{
+    display: inline-block;
+}
