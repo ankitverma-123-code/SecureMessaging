@@ -1,5 +1,5 @@
 const express = require('express');
-var path = require('path');
+var database = require('./database');
 
 // Define our application
 const app = express();
@@ -23,8 +23,12 @@ MongoClient.connect(url, function(err, db) {
 */
 //mongo "mongodb+srv://cluster0.mwzax.mongodb.net/capstonehackmsg" --username RajGM
 // Connect to the database, then execute the "callback" function (in this case an anonymous function which starts listening for requests).
-    // Start listening for requests on the port defined earlier
-app.listen(app.get('port'), function(){
-    console.log("Express server listening on port " + app.get('port'));
-    console.log("You application is running. You should be able to connect to it on http://localhost:" + app.get('port') );
+// Start listening for requests on the port defined earlier
+database(function(){
+    app.listen(app.get('port'), function(){
+        console.log("Express server listening on port " + app.get('port'));
+        console.log("You application is running. You should be able to connect to it on http://localhost:" + app.get('port') );
+    });
 });
+
+

@@ -1,0 +1,9 @@
+{
+    "database" : {
+        "host": "localhost",
+        "port": "3000",
+        "collection": "newdb",
+        "username": "rajgmdevelop19@gmail.com",
+        "password": "Gaurav@123todatabase"
+    }
+}
