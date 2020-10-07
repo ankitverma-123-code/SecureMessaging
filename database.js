@@ -10,7 +10,7 @@ if (databaseParameters.username && databaseParameters.password  && databaseParam
 dbConnection += databaseParameters.host + ":" + databaseParameters.port + "/" + databaseParameters.collection;
 
 module.exports = function(callback){
-    mongoose.createConnection(dbConnection, { useUnifiedTopology: true,useNewUrlParser: true});
+    mongoose.connect(dbConnection);
     var db=mongoose.connection;
     
     db.on('connected', function () {
