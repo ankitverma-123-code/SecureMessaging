@@ -1,7 +1,8 @@
 const express = require('express');
 //var database = require('./database');
-var mongo = require('mongodb');
+//var mongo = require('mongodb');
 const mongoose = require("mongoose");
+const bodyparser = require("body-parser");
 
 // Define our application
 const app = express();
@@ -9,6 +10,13 @@ const app = express();
 // Set 'port' value to either an environment value PORT or 3000
 app.set('port', process.env.PORT || 3000);
 
+//Middleware for bodyparser
+app.use(bodyparser.urlencoded({
+  extended: true
+}));
+app.use(bodyparser.json());
+
+//mongodb connect
 const configFile = require('./myUrl.js');
 const db = configFile.mongoURL+configFile.userName+":"+configFile.password+configFile.restUrl;
 
@@ -21,13 +29,13 @@ mongoose
 var route = require('./router');
 app.use('/', route);
 const register = require('./app/router/register');
-app.use("/register/",register);
+app.use("/register",register);
 const login = require('./app/router/login');
-app.use("/login/",login);
+app.use("/login",login);
 const reset = require('./app/router/reset');
-app.use('/reset/',reset);
+app.use('/reset',reset);
 const chatbox = require('./app/router/chatbox');
-app.use('/chatbox/',chatbox);
+app.use('/chatbox',chatbox);
 
 app.listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));

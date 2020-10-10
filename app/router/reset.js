@@ -5,11 +5,7 @@ var path = require('path');
 router.get('/',function(req,res){
     res.sendFile(path.join(__dirname+'./../views/'+'reset.html'));
 })
-/*
-router.get('/reset.html',function(req,res){
-    res.sendFile(path.join(__dirname+'./../views/'+'reset.html'));
-})
-*/
+
 module.exports = router;
 
 

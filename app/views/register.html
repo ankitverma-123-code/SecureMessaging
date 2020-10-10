@@ -4,7 +4,7 @@
 <title>Register</title>
 </head>
 <body>
-    <form>
+    <form action="http://localhost:3000/register/" method="post">
         <label for="Email">Email</label><br>
         <input type="text" id="email" name="email"><br>
         <label for="userName">User Name</label><br>
@@ -13,8 +13,8 @@
         <input type="password" id="Password" name="Password"><br><br>
         <label for="cPassword">Enter Password Again</label><br>
         <input type="password" id="cPassword" name="cPassword"><br><br>
+        <button type="submit" formmethod="post">Submit</button>
       </form> 
-    <button>Register</button>
     <br>
     <a href="http://localhost:3000/login/" target="_self">
     <button>Login Page</button>

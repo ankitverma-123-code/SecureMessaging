@@ -4,13 +4,13 @@
 <title>Register</title>
 </head>
 <body>
-    <form>
+    <form action="http://localhost:3000/login/" method="post">
         <label for="userName">User Name</label><br>
         <input type="text" id="userName" name="userName"><br>
         <label for="Password">Password</label><br>
         <input type="password" id="Password" name="Password"><br><br>
-        </form> 
-    <button>Login</button>
+        <button type="submit" formmethod="post">Login</button>
+    </form> 
     <br>
     <br>
     <a href="http://localhost:3000/reset/" target="_self">
