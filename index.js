@@ -10,6 +10,9 @@ const app = express();
 // Set 'port' value to either an environment value PORT or 3000
 app.set('port', process.env.PORT || 3000);
 
+app.use(express.static(__dirname + '/public'));
+
+
 //Middleware for bodyparser
 app.use(bodyparser.urlencoded({
   extended: true
@@ -36,6 +39,8 @@ const reset = require('./app/router/reset');
 app.use('/reset',reset);
 const chatbox = require('./app/router/chatbox');
 app.use('/chatbox',chatbox);
+const cssFiles = require('./app/router/cssFiles');
+app.use('/public',cssFiles);
 
 app.listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));

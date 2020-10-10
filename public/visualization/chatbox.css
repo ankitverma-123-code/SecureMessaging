@@ -1,13 +1,16 @@
 #contactsMenu{
  border: 1px solid black;
- height: 200px;
+ height: 500px;
  width: 200px;   
+ overflow: scroll;
 }
 
 #chatMenu{
     border: 1px solid red;
-    height: 200px;
+    height: 500px;
     width: 200px;
+    display: inline-block;
+    overflow: scroll;
 }
 
 div{

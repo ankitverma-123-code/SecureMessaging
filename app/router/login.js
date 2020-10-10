@@ -8,7 +8,6 @@ router.get('/',function(req,res){
 
 const logProfile = require('../models/profile');
 
-
 router.post('/', (req,res)=>{
     const username = req.body.userName;
     const password = req.body.Password;
@@ -26,9 +25,6 @@ router.post('/', (req,res)=>{
                 }
             }
         })
-
 })
 
-
 module.exports = router;
-

@@ -2,15 +2,21 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const chatSchema = new Schema({
-    uniqueId:{
+    user1:{
         type:String,
         required:true
     },
-    usr1AuthToken:{
-        type:String
+    user2:{
+        type:String,
+        required:true
     },
-    usr2AuthToken:{
-        type:String
+    user1anduser2:{
+        type:String,
+        required:true
+    },
+    user2anduser1:{
+        type:String,
+        required:true
     }
 });
 
