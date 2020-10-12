@@ -14,14 +14,26 @@ const chatSchema = new Schema({
         type:String,
         required:true
     },
-    user1anduser2:{
-        type:String,
-        required:true
-    },
-    user2anduser1:{
-        type:String,
-        required:true
-    }
+    msg:[
+        {
+            from:{
+                type:String,
+                required:true,
+            },
+            to:{
+                type:String,
+                required:true,
+            },
+            message:{
+                type:String,
+                required:true
+            },
+            timeStamp:{
+                type:String,
+                required:true
+            }
+        }
+    ]
 });
 
 module.exports = chatWindow = mongoose.model("chatBox",chatSchema);
