@@ -13,6 +13,10 @@ const chatMsg = new Schema({
     message:{
         type:String,
         required:true
+    },
+    timeStamp:{
+        type:String,
+        required:true
     }
 });
 

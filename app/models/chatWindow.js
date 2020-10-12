@@ -10,6 +10,10 @@ const chatSchema = new Schema({
         type:String,
         required:true
     },
+    usr12:{
+        type:String,
+        required:true
+    },
     user1anduser2:{
         type:String,
         required:true

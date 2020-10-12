@@ -9,4 +9,3 @@ module.exports = {
   
   //format
   //restUrl:"mongodb+srv://RajGM:Gaurav@123todatabase@cluster0.mwzax.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    
