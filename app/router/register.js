@@ -11,24 +11,22 @@ const regProfile = require('../models/profile');
 
 router.post('/',(req,res)=>{
     console.log("Posting request");
-    const profileValues = {email:"",username:"",password:""};
+    const profileValues = {username:"",password:""};
     console.log(req.body);
     
-    if(req.body.email!="" && req.body.username!="" && req.body.password!=""){
+    if(req.body.username!="" && req.body.password!=""){
         profileValues.username = req.body.userName;
-        profileValues.email = req.body.email;
         profileValues.password = req.body.Password;
     }
     console.log("Values in server object");
     console.log(profileValues);
-    regProfile.findOne({email:req.body.email})
-        .then(profileEmail=>{
-            if(profileEmail){
-                res.status(400).json({email:"Email exists"});
+    regProfile.findOne({userName:req.body.userName})
+        .then(profileUName=>{
+            if(profileUName){
+                res.status(400).json({profileUName:"profileUName exists"});
             }else{
                 const newProfile = new regProfile({
                     userName:req.body.userName,
-                    email:req.body.email,
                     password:req.body.Password
                 });
                 newProfile

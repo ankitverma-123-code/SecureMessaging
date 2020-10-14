@@ -13,27 +13,7 @@ const chatSchema = new Schema({
     usr12:{
         type:String,
         required:true
-    },
-    msg:[
-        {
-            from:{
-                type:String,
-                required:true,
-            },
-            to:{
-                type:String,
-                required:true,
-            },
-            message:{
-                type:String,
-                required:true
-            },
-            timeStamp:{
-                type:String,
-                required:true
-            }
-        }
-    ]
+    }
 });
 
 module.exports = chatWindow = mongoose.model("chatBox",chatSchema);

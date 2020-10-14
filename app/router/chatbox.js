@@ -72,6 +72,7 @@ router.post('/', (req, res) => {
                                 .then(succ=>console.log(succ))
                                 .catch(err=>console.log(err));
 
+                                insertData(usr1and2,newMessage);
 
                             res.status(404).json({ pro: "Chatwindow does not exists creating new collection" });
                         }
