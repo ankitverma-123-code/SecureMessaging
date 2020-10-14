@@ -6,5 +6,3 @@ module.exports = {
     dbName:"testdb",
     collection:"testCollection"
   };
-  
-  

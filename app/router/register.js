@@ -8,6 +8,7 @@ router.get('/',function(req,res){
 })
 
 const regProfile = require('../models/profile');
+const authToken = require('./../models/authToken');
 
 router.post('/',(req,res)=>{
     console.log("Posting request");
@@ -33,9 +34,23 @@ router.post('/',(req,res)=>{
                     .save()
                     .then( 
                         profileRes => 
-                        res.json(profileRes)
+                        console.log("profileRes"+profileRes)
+                        //res.json(profileRes)
                         )
                     .catch(err=>console.log(err));
+
+                const authTokenDB = new authToken({
+                    userName:req.body.userName,
+                    authToken:""
+                });
+                
+                authTokenDB
+                    .save()
+                    .then(authRes => 
+                        console.log("authRes"+authRes))
+                    .catch(err=>console.log("Err"+err));
+
+                res.status(200).json("Registration and authorization done");
             }
         })
         .catch(err=>console.log("Find err"+err));

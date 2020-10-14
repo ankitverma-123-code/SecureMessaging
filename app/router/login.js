@@ -19,6 +19,9 @@ router.post('/', (req,res)=>{
                 return res.status(404).json({emailerr:"Not found"});
             }else{
                 if(password==person.password){
+                    
+
+
                     res.status(200).json({logInfo:"Success"});
                 }else{
                     res.status(400).json({passerr:"Incorrect"});

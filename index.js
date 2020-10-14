@@ -12,7 +12,6 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
 
-
 //Middleware for bodyparser
 app.use(bodyparser.urlencoded({
   extended: true
@@ -41,6 +40,9 @@ app.use('/reset',reset);
 */
 const chatbox = require('./app/router/chatbox');
 app.use('/chatbox',chatbox);
+const dumpDB = require('./app/router/dump');
+app.use('/dump',dumpDB);
+
 const cssFiles = require('./app/router/cssFiles');
 app.use('/public',cssFiles);
 
