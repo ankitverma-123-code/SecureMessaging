@@ -41,7 +41,8 @@ router.post('/',(req,res)=>{
 
                 const authTokenDB = new authToken({
                     userName:req.body.userName,
-                    authToken:""
+                    authToken:"",
+                    authExpire:""
                 });
                 
                 authTokenDB

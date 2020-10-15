@@ -16,7 +16,6 @@ router.post('/', (req, res) => {
     console.log(req.body);
     var timeStamp = new Date();
 
-
     if (req.body.from != "" && req.body.to != "" && req.body.message != "") {
         msgValues.from = req.body.from;
         msgValues.to = req.body.to;
@@ -32,8 +31,6 @@ router.post('/', (req, res) => {
         message: req.body.message,
         timeStamp: timeStamp
     });
-
-
 
     regProfile.findOne({ userName: req.body.to })
         .then(profileEmail => {
@@ -123,7 +120,4 @@ function insertData(name, data) {
     });
 }
 
-
-
 module.exports = router;
-
