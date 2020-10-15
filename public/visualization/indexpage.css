@@ -1,0 +1,32 @@
+body {
+    background-color: #14213B;
+}
+
+#middleDiv {
+    margin-top: 270px;
+    margin-left: 800px;
+    height: 400px;
+    width: 400px;
+    background-color: #86DFF5;
+}
+
+.bar {
+    height: 45px;
+    width: 400px;
+    border-radius: 30px;
+    background-color: #dcdcdc;
+}
+
+.searchbar {
+    height: 45px;
+    width: 300px;
+    font-size: 16px;
+    margin-left: 45px;
+    border-radius: 30px;
+    border: 1px solid #dcdcdc;
+    background-color: #dcdcdc;
+}
+
+.searchbar:hover {
+    box-shadow: 1px 1px 8px 1px #dcdcdc;
+}

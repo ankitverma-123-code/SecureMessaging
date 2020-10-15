@@ -9,6 +9,27 @@ router.get('/', function (req, res) {
 const regProfile = require('../models/profile');
 const msgSent = require('../models/chatMsg');
 const chatW = require('./../models/chatWindow');
+const authToken = require('./../models/authToken');
+
+router.post('/logout', (req, res) => {
+    console.log("Logging out");
+    const aT = new authToken({
+        userName: req.body.from,
+        authToken: ""
+    });
+
+    authToken.findOneAndUpdate({ userName: req.body.from }, { authToken: "", authExpire: "" }, { upsert: true, useFindAndModify: false })
+        .then(updatedDocument => {
+            if (updatedDocument) {
+                console.log("Updated" + updatedDocument);
+            } else {
+                console.log("Not updated" + updatedDocument);
+            }
+            return updatedDocument;
+        })
+        .catch(err => console.log(err));
+    res.status(200).json({loggedOut:"Logged out success"});
+});
 
 router.post('/', (req, res) => {
     console.log("Posting Message");
@@ -52,24 +73,24 @@ router.post('/', (req, res) => {
                     .then(user12 => {
                         if (user12) {
                             console.log("Chatwindow exists");
-                            insertData(usr1and2,newMessage);
+                            insertData(usr1and2, newMessage);
                             res.status(400).json({ pro: "Chatwindow exists" });
                         } else {
                             console.log("Chatwindow does not exists creating new collection");
                             createCollections(usr1and2);
-                            
+
                             const newChatWindow = new chatW({
-                                user1:usr1,
-                                user2:usr2,
-                                usr12:usr1and2
+                                user1: usr1,
+                                user2: usr2,
+                                usr12: usr1and2
                             });
 
                             newChatWindow
                                 .save()
-                                .then(succ=>console.log(succ))
-                                .catch(err=>console.log(err));
+                                .then(succ => console.log(succ))
+                                .catch(err => console.log(err));
 
-                                insertData(usr1and2,newMessage);
+                            insertData(usr1and2, newMessage);
 
                             res.status(404).json({ pro: "Chatwindow does not exists creating new collection" });
                         }
