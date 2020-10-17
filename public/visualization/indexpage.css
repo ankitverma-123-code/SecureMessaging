@@ -1,32 +1,48 @@
 body {
-    background-color: #14213B;
+    background-color: red;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
-#middleDiv {
-    margin-top: 270px;
-    margin-left: 800px;
-    height: 400px;
-    width: 400px;
-    background-color: #86DFF5;
+#pageDiv{
+    height: 500px;
+    width: 500px;
+    background-color: brown;
 }
+
+#middleDiv {   
+    width: 40%;
+    height: 40%;
+    background-color: black;
+}
+
+/*
 
 .bar {
-    height: 45px;
-    width: 400px;
+    margin-top:15px ;
+    height: 60%;
+    width: 100%;
     border-radius: 30px;
     background-color: #dcdcdc;
 }
 
 .searchbar {
     height: 45px;
-    width: 300px;
+    width: 250px;
     font-size: 16px;
-    margin-left: 45px;
+    margin-left: 80px;
     border-radius: 30px;
     border: 1px solid #dcdcdc;
     background-color: #dcdcdc;
 }
 
-.searchbar:hover {
+.searchbar:focus {
+    outline: none;
+}
+
+.bar:hover {
     box-shadow: 1px 1px 8px 1px #dcdcdc;
 }
+
+*/
