@@ -1,13 +1,40 @@
-var from = document.getElementById('from').textContent;
-var to = document.getElementById('to').textContent;
-var msg = document.getElementById('message').textContent;
-var sendButton = document.getElementById('send');
+//const { send } = require("../..");
+var socket = io.connect('http://localhost:3000');
 
-sendButton.onClick = function(){sendMessagefun()};
+var from = "";
+var to = "";
+var message = "";
+var sendbutton = document.getElementById("Send");
+var x = document.getElementById("Send");
 
-function sendMessagefun(){
-console.log("Send Message button clicked");
-xhttp.open("POST", "http://localhost:3000/chatbox", true);
-xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-xhttp.send(`from=${from}&to=${to}&message=${msg}`);
+/*
+sendbutton.addEventListener('click',function(){
+    socket.emit('chat',{
+        from:"from",
+        to:"to",
+        message:"message"
+    });
+});
+*/
+
+window.onload = function(){
+    socket.emit('chat',{
+        from:"from",
+        to:"to",
+        message:"message"
+    });
 }
+
+/*
+message.addEventListener('keypress',function(){
+    socket.emit('typing',from);
+});
+*/
+
+socket.on('chat',function(data){
+    console.log(data);
+});
+
+socket.on('typing',function(data){
+    console.log("Typing a message");
+})

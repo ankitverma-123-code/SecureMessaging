@@ -4,8 +4,15 @@ const express = require('express');
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 
+
 // Define our application
 const app = express();
+
+//sockets for real time 
+//var http = require('http').Server(app);
+//const client = require('socket.io')(http);
+var socket = require('socket.io');
+
 
 // Set 'port' value to either an environment value PORT or 3000
 app.set('port', process.env.PORT || 3000);
@@ -46,7 +53,29 @@ app.use('/dump',dumpDB);
 const cssFiles = require('./app/router/cssFiles');
 app.use('/public',cssFiles);
 
-app.listen(app.get('port'), function(){
+/*
+client.on('connection', () =>{
+  console.log('a user is connected')
+})
+*/
+
+var server = app.listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));
     console.log("You application is running. You should be able to connect to it on http://localhost:" + app.get('port') );
 });
+
+var io = socket(server);
+var connected = io.on('connection',function(socket){
+  console.log('Socket made connection with client id:'+socket.id);
+
+  socket.on('chat',function(data){
+    io.sockets.emit('chat',data)
+  });
+
+  socket.on('typing',function(data){
+    socket.broadcast.emit('typing',data);
+  })
+
+});
+
+module.exports = io;

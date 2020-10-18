@@ -1,6 +1,7 @@
 const express = require('express');
 const router = new express.Router();
 var path = require('path');
+var connected = require('./../../index');
 
 router.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + './../views/' + 'chatbox.html'));
@@ -10,6 +11,7 @@ const regProfile = require('../models/profile');
 const msgSent = require('../models/chatMsg');
 const chatW = require('./../models/chatWindow');
 const authToken = require('./../models/authToken');
+const { isObject } = require('util');
 
 router.post('/logout', (req, res) => {
     console.log("Logging out");
@@ -140,5 +142,7 @@ function insertData(name, data) {
         });
     });
 }
+
+
 
 module.exports = router;

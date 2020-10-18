@@ -3,8 +3,16 @@
 <head>
 <title>HackApp:Chatbox</title>
 <link rel="stylesheet" type="text/css" href="/visualization/chatbox.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js" 
+integrity="sha512-AcZyhRP/tbAEsXCCGlziPun5iFvcSUpEz2jKkx0blkYKbxU81F+iq8FURwPn1sYFeksJ+sDDrI5XujsqSobWdQ==" 
+crossorigin="anonymous">
+</script>
+<script src="/javaScript/chatbox.js"></script>
+
 </head>
 <body>
+    
     <h1>This is chat Box</h1>
     <div id="from">test1</div>
     <div id="to">test2</div>
@@ -19,7 +27,7 @@
         Chat Menu
         <div id="message">This is first message</div>
     </div>
-    <button id="send">Send Message</button>
+    <button id="Send">Send Message</button>
 </body>
 </body>
 </html>
