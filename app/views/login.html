@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Register</title>
+    <title>Register</title>
 </head>
+
 <body>
-    <form action="http://localhost:3000/login/" method="post">
-        <label for="userName">User Name</label><br>
-        <input type="text" id="userName" name="userName"><br>
-        <label for="Password">Password</label><br>
+
+    <div>
+        <label for="userName">User Name</label>
+        <input type="text" name="userName" id="userName"></input>
+        <br>
+        <br>
+        <label for="Password">Password</label>
         <input type="password" id="Password" name="Password"><br><br>
-        <button type="submit" formmethod="post">Login</button>
-    </form> 
-    <br>
-    <br>
-    <a href="http://localhost:3000/reset/" target="_self">
-        <button>Reset ID or Pass</button>
-    </a>
+        <button id="LoginButton">Login</button>
+    </div>
+
+    <script src="/javaScript/loginClient.js"></script>
 </body>
+
 </html>

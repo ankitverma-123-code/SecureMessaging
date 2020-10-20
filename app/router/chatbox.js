@@ -11,7 +11,6 @@ const regProfile = require('../models/profile');
 const msgSent = require('../models/chatMsg');
 const chatW = require('./../models/chatWindow');
 const authToken = require('./../models/authToken');
-const { isObject } = require('util');
 
 router.post('/logout', (req, res) => {
     console.log("Logging out");
@@ -76,7 +75,7 @@ router.post('/', (req, res) => {
                         if (user12) {
                             console.log("Chatwindow exists");
                             insertData(usr1and2, newMessage);
-                            res.status(400).json({ pro: "Chatwindow exists" });
+                            res.status(202).json({ pro: "Chatwindow exists" });
                         } else {
                             console.log("Chatwindow does not exists creating new collection");
                             createCollections(usr1and2);
