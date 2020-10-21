@@ -13,7 +13,13 @@ router.post('/', (req,res)=>{
     const username = req.body.userName;
     const password = req.body.Password;
 
-    console.log("Login post req");
+    /*
+    console.log("Type of data:"+typeof req);
+    console.log("Type of data:"+typeof req.body);
+    console.log("Type of data:"+typeof req.body.userName);
+    */
+
+    //console.log("Login post req");
     logProfile.findOne({userName:req.body.userName})
         .then(person=>{
             if(!person){

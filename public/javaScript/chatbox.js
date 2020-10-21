@@ -17,6 +17,34 @@ sendButton.onclick = function () {
     console.log(from.value);
     console.log(to.value);
     console.log(message.value);
+
+
+    var objSent = {
+        from:"",
+        to:"",
+        message:""
+    }
+
+    objSent.from = from.value;
+    objSent.to = to.value;
+    objSent.message = message.value;
+
+    //var jsonFormat = JSON.parse("userName="+userName+"&"+"Password="+Password);
+    var jsonFormat = JSON.stringify(objSent); 
+
+
+    try{
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/chatbox/", true);
+        xhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
+        xhttp.send(jsonFormat);    
+        //xhttp.send(objSent);
+        }
+        catch(err){
+            console.log("Error"+err);
+        }
+
+
 }
 
 
