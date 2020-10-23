@@ -15,7 +15,6 @@ RegisterButton.onclick = function () {
     objSent.userName = userName.value;
     objSent.Password = Password.value;
 
-    //var jsonFormat = JSON.parse("userName="+userName+"&"+"Password="+Password);
     var jsonFormat = JSON.stringify(objSent); 
 
     try{
@@ -23,12 +22,8 @@ RegisterButton.onclick = function () {
     xhttp.open("POST", "/register/", true);
     xhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
     xhttp.send(jsonFormat);    
-    //xhttp.send(objSent);
     }
     catch(err){
         console.log("Error"+err);
     }
-
-
-
 }
