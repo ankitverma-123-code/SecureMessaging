@@ -23,26 +23,43 @@ router.post('/', (req,res)=>{
     logProfile.findOne({userName:req.body.userName})
         .then(person=>{
             if(!person){
+                console.log("Email not found");
                 return res.status(404).json({emailerr:"Not found"});
             }else{
+                console.log(person);
                 if(password==person.password){
                     console.log("Inside password comparision");
-                    authToken.findOneAndUpdate({userName:req.body.userName},{authToken:"ABCDEFG",authExpire:"Soon2Expire"},{upsert: true,useFindAndModify:false})
+                    authToken.findOneAndUpdate({userName:username},{authToken:"ABCDEFG",authExpire:"Soon2Expire"},{upsert: true,useFindAndModify:false})
                         .then(updatedDocument=>{
                             if(updatedDocument){
                                 console.log("Updated"+updatedDocument);
                             }else{
-                                console.log("Not updated"+updatedDocument);
+                                console.log("Not updated");
                             }
-                            return updatedDocument;
+                            //return updatedDocument;
                         })
                         .catch(err=>console.log(err));
-                    res.status(200).json({logInfo:"Success"});
+                    
+                    
+                    responseObj = {
+                        logInfo:"Success",
+                        userName:username,
+                        authToken:"ABCDEFG"
+                    };
+                    
+                    console.log("Sending response This is not good is that was async");
+                    res.status(200).json(responseObj);
+                    //res.status(200).json({logInfo:"SuccessTest checking"});
                 }else{
-                    res.status(400).json({passerr:"Incorrect"});
+                    responseObj = {
+                        logInfo:"Fail"
+                    };
+                    console.log("Password incorrect");
+                    res.status(200).json(responseObj);
                 }
             }
         })
+        .catch(err=>console.log(err));
 })
 
 module.exports = router;

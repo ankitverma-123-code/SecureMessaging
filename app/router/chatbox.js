@@ -1,16 +1,16 @@
 const express = require('express');
 const router = new express.Router();
 var path = require('path');
-var connected = require('./../../index');
-
-router.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + './../views/' + 'chatbox.html'));
-})
 
 const regProfile = require('../models/profile');
 const msgSent = require('../models/chatMsg');
 const chatW = require('./../models/chatWindow');
 const authToken = require('./../models/authToken');
+const socketToken = require('./../models/socketToken');
+
+router.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + './../views/' + 'chatbox.html'));
+});
 
 router.post('/logout', (req, res) => {
     console.log("Logging out");
@@ -32,7 +32,14 @@ router.post('/logout', (req, res) => {
     res.status(200).json({loggedOut:"Logged out success"});
 });
 
+
+
 router.post('/', (req, res) => {
+    //check eachTime for auth Token verification
+    //Then
+    //Check for socketIDToken of from and to if all good 
+    //Then save and sent message 
+    //Else save message only
     console.log("Posting Message");
     const msgValues = { from: "", to: "", message: "" };
     console.log(req.body);

@@ -4,7 +4,6 @@ const express = require('express');
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 
-
 // Define our application
 const app = express();
 
@@ -12,7 +11,6 @@ const app = express();
 //var http = require('http').Server(app);
 //const client = require('socket.io')(http);
 var socket = require('socket.io');
-
 
 // Set 'port' value to either an environment value PORT or 3000
 app.set('port', process.env.PORT || 3000);
@@ -65,7 +63,8 @@ var server = app.listen(app.get('port'), function(){
 });
 
 var io = socket(server);
-var connected = io.on('connection',function(socket){
+
+io.on('connection',function(socket){
   console.log('Socket made connection with client id:'+socket.id);
 
   socket.on('chat',function(data){
@@ -73,9 +72,7 @@ var connected = io.on('connection',function(socket){
   });
 
   socket.on('typing',function(data){
+      console.log("Typing");
     socket.broadcast.emit('typing',data);
   });
-
 });
-
-module.exports = io;
