@@ -19,6 +19,16 @@ RegisterButton.onclick = function () {
 
     try{
     var xhttp = new XMLHttpRequest();
+    xhttp.onload = function(){
+        var response = JSON.parse(this.responseText);
+        console.log(response);
+        if(response.logInfo=="Fail"){
+            console.log("Username exists");
+        }else if(response.logInfo=="Success"){
+            console.log("Registration success");
+            window.location.href = "http://localhost:3000/login";
+        }
+    }
     xhttp.open("POST", "/register/", true);
     xhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
     xhttp.send(jsonFormat);    

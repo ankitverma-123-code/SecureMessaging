@@ -9,7 +9,9 @@ const ProfileSchema = new Schema({
     password:{
         type:String,
         require:true
-    }
+    },
+    chatWindow:[{type:String}]
+    //chatWindow:{type:Array,"default":[]}
 });
 
 module.exports = Profile = mongoose.model("userProfile",ProfileSchema);

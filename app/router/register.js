@@ -24,7 +24,10 @@ router.post('/',(req,res)=>{
     regProfile.findOne({userName:req.body.userName})
         .then(profileUName=>{
             if(profileUName){
-                res.status(400).json({profileUName:"profileUName exists"});
+                responseObj = {
+                    logInfo:"Fail"
+                };
+                res.status(200).json(responseObj);
             }else{
                 const newProfile = new regProfile({
                     userName:req.body.userName,
@@ -51,10 +54,25 @@ router.post('/',(req,res)=>{
                         console.log("authRes"+authRes))
                     .catch(err=>console.log("Err"+err));
 
-                res.status(200).json("Registration and authorization done");
+                    responseObj = {
+                        logInfo:"Success"
+                    };
+
+                res.status(200).json(responseObj);
             }
         })
         .catch(err=>console.log("Find err"+err));
 });
 
 module.exports = router;
+
+/*
+responseObj = {
+    logInfo:"Success",
+    userName:username,
+    authToken:"ABCDEFG"
+};
+
+console.log("Sending response This is not good is that was async");
+res.status(200).json(responseObj);
+*/

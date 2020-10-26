@@ -7,6 +7,7 @@ const msgSent = require('../models/chatMsg');
 const chatW = require('./../models/chatWindow');
 const authToken = require('./../models/authToken');
 const socketToken = require('./../models/socketToken');
+const { createIndexes } = require('../models/profile');
 
 router.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + './../views/' + 'chatbox.html'));
@@ -29,7 +30,7 @@ router.post('/logout', (req, res) => {
             return updatedDocument;
         })
         .catch(err => console.log(err));
-    res.status(200).json({loggedOut:"Logged out success"});
+    res.status(200).json({ loggedOut: "Logged out success" });
 });
 
 
@@ -82,8 +83,57 @@ router.post('/', (req, res) => {
                         if (user12) {
                             console.log("Chatwindow exists");
                             insertData(usr1and2, newMessage);
-                            res.status(202).json({ pro: "Chatwindow exists" });
+                            res.status(200).json({ pro: "Chatwindow exists" });
                         } else {
+
+                            console.log("*********************");
+                            console.log("*********************");
+                            console.log("*********************");
+                            console.log("*Updating in profile*");
+                            console.log("*********************");
+                            console.log("*********************");
+                            console.log("*********************");
+
+                            /*
+                            authToken.findOneAndUpdate({userName:username},{authToken:"ABCDEFG",authExpire:"Soon2Expire"},{upsert: true,useFindAndModify:false})
+                        .then(updatedDocument=>{
+                            if(updatedDocument){
+                                console.log("Updated"+updatedDocument);
+                            }else{
+                                console.log("Not updated");
+                            }
+                            //return updatedDocument;
+                        })
+                        .catch(err=>console.log(err));
+                            */
+
+
+
+                            regProfile.findOneAndUpdate(
+                                {userName:req.body.from},
+                                {$push:{
+                                    chatWindow:{
+                                        usr1and2
+                                    }
+                                }}
+                                )
+                                .then(succ=>console.log(succ))
+                                .catch(err=>console.log(err));
+
+                                regProfile.findOneAndUpdate(
+                                    {userName:req.body.to},
+                                    {$push:{
+                                        chatWindow:{
+                                            usr1and2
+                                        }
+                                    }}
+                                    )
+                                    .then(succ=>console.log(succ))
+                                    .catch(err=>console.log(err));
+    
+
+
+
                             console.log("Chatwindow does not exists creating new collection");
                             createCollections(usr1and2);
 
@@ -100,7 +150,7 @@ router.post('/', (req, res) => {
 
                             insertData(usr1and2, newMessage);
 
-                            res.status(404).json({ pro: "Chatwindow does not exists creating new collection" });
+                            res.status(200).json({ pro: "Chatwindow does not exists creating new collection" });
                         }
                     })
                     .catch()
