@@ -94,45 +94,8 @@ router.post('/', (req, res) => {
                             console.log("*********************");
                             console.log("*********************");
 
-                            /*
-                            authToken.findOneAndUpdate({userName:username},{authToken:"ABCDEFG",authExpire:"Soon2Expire"},{upsert: true,useFindAndModify:false})
-                        .then(updatedDocument=>{
-                            if(updatedDocument){
-                                console.log("Updated"+updatedDocument);
-                            }else{
-                                console.log("Not updated");
-                            }
-                            //return updatedDocument;
-                        })
-                        .catch(err=>console.log(err));
-                            */
-
-
-
-                            regProfile.findOneAndUpdate(
-                                {userName:req.body.from},
-                                {$push:{
-                                    chatWindow:{
-                                        usr1and2
-                                    }
-                                }}
-                                )
-                                .then(succ=>console.log(succ))
-                                .catch(err=>console.log(err));
-
-                                regProfile.findOneAndUpdate(
-                                    {userName:req.body.to},
-                                    {$push:{
-                                        chatWindow:{
-                                            usr1and2
-                                        }
-                                    }}
-                                    )
-                                    .then(succ=>console.log(succ))
-                                    .catch(err=>console.log(err));
-    
-
-
+                           updateProfile(req.body.from,usr1and2);
+                           updateProfile(req.body.to,usr1and2);
 
                             console.log("Chatwindow does not exists creating new collection");
                             createCollections(usr1and2);
@@ -199,6 +162,72 @@ function insertData(name, data) {
     });
 }
 
+function updateProfile(userName,chatboxName){
+    var MongoClient = require('mongodb').MongoClient;
+    const configFile = require('./../../myUrl');
 
+    const url = configFile.mongoURL + configFile.userName + ":" + configFile.password + configFile.restUrl;
+
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("testdb");
+        
+        /*
+       dbo.collection("userprofiles").findOneAndUpdate(
+           {userName:userName},
+           {$push:{
+            "chatWindow":chatboxName
+            }}
+           )
+           .then(succ=>console.log(succ))
+            .catch(err=>console.log(err));
+            */
+           dbo.collection("userprofiles").updateOne(
+            {userName:userName},
+               {$push:{
+                "chatWindow":chatboxName
+            }}
+        )
+        .then(ok=>console.log("Update chatWindow in profile done:"+ok))
+        .catch(err=>console.log("Update cannot be completed:"+err))
+
+
+    });
+
+}
 
 module.exports = router;
+
+
+//var myobj = { name: "Company Inc", address: "Highway 37" };
+        /*
+        dbo.collection(name).insertOne(data, function (err, res) {
+            if (err) throw err;
+            console.log("1 document inserted");
+            db.close();
+        });
+        */
+        /*
+        regProfile.findOneAndUpdate(
+                                {userName:req.body.from},
+                                {$push:{
+                                    "chatWindow":usr1and2
+                                }}
+                                )
+                                .then(succ=>console.log(succ))
+                                .catch(err=>console.log(err));
+        */
+       /*
+       
+                            authToken.findOneAndUpdate({userName:username},{authToken:"ABCDEFG",authExpire:"Soon2Expire"},{upsert: true,useFindAndModify:false})
+                        .then(updatedDocument=>{
+                            if(updatedDocument){
+                                console.log("Updated"+updatedDocument);
+                            }else{
+                                console.log("Not updated");
+                            }
+                            //return updatedDocument;
+                        })
+                        .catch(err=>console.log(err));
+
+       */

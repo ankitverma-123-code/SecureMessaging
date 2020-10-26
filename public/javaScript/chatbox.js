@@ -9,7 +9,6 @@ if(sessionStorage.getItem("userName")===null && sessionStorage.getItem("authToke
     window.location.href = "http://localhost:3000/login";
 }else{
     from.value = sessionStorage.getItem("userName");
-    //
 }
 sendButton.onclick = function () {
     /*
