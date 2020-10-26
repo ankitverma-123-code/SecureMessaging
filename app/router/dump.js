@@ -2,19 +2,20 @@ const express = require('express');
 const router = new express.Router();
 var path = require('path');
 const regProfile = require('./../models/profile');
-const util = require("util"); //for checking promise states
+var wholeCollData = [];
 
-
-var collectionList = [];
 
 router.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + './../views/' + 'dump.html'));
+});
+
+router.get('/data', function (req, res) {
+    //wholeCollData = [];
     //dumpData("testdb");
     getWholeChat("test");
-    
-    getCollectionData("testtest2");
-    //res.status(200).json({ pro: "data" });
-    res.sendFile(path.join(__dirname + './../views/' + 'dump.html'));
-})
+
+    res.status(200).json(wholeCollData);
+});
 
 function dumpData(DBname) {
     var MongoClient = require('mongodb').MongoClient;
@@ -34,37 +35,23 @@ function dumpData(DBname) {
 };
 
 function getCollectionNames(userName) {
-    var collectionArr=[];
-    var promiseState;
-    promiseState = regProfile.findOne({ userName: userName })
+    var collectionArr = [];
+
+    regProfile.findOne({ userName: userName })
         .then(profileEmail => {
             if (profileEmail) {
-                
-                
-                for(var i=0;i<profileEmail.chatWindow.length;i++){
-                    //collectionArr[i]=profileEmail.chatWindow[i];
-                    collectionArr.push(profileEmail.chatWindow[i]);
-                    //collectionList.push(profileEmail.chatWindow[i]);
+                collectionArr=profileEmail.chatWindow;
+                console.log(collectionArr);              
+                //call collection data display here it would work i think
+                for (let i = 0; i < collectionArr.length; i++) {
+                    getCollectionData(collectionArr[i]);
                 }
-                //console.log(collectionArr);
-                
-                //displayCollArr("Displaying using callback:"+collectionArr);
             }
             else {
                 res.status(200).json({ response: "Fail" });
             }
         })
         .catch(err => console.log(err));
-
-        while(!util.inspect(promiseState).includes("pending")){
-        console.log(util.inspect(promiseState).includes("pending"));
-        }
-        console.log(util.inspect(promiseState).includes("pending"));
-        promiseState
-        .then(console.log("Printing from promise:"+collectionArr))
-        .catch(err=>console.log("Promise unfullfilled"));
-
-        return collectionArr;
 
 }
 
@@ -83,11 +70,13 @@ function getCollectionData(collName) {
                 .db("testdb")
                 .collection(collName)
                 .find({})
-                .project({timeStamp:0,_id: 0})
+                .project({ timeStamp: 0, _id: 0 })
                 .toArray((err, data) => {
                     if (err) throw err;
 
-                    console.log(data);
+                    //console.log(data);
+                    wholeCollData.push(data);
+                    //console.log(wholeCollData);
 
                     client.close();
                 });
@@ -96,11 +85,8 @@ function getCollectionData(collName) {
 
 };
 
-function getWholeChat(userName){
-    var arr=[];
-    arr = getCollectionNames(userName);
-    
-    console.log(arr);
+function getWholeChat(userName) {
+    getCollectionNames(userName);
 }
 
 module.exports = router;
