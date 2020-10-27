@@ -3,7 +3,7 @@ const router = new express.Router();
 var path = require('path');
 const regProfile = require('./../models/profile');
 var wholeCollData = [];
-
+var collectionArr = [];
 
 router.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + './../views/' + 'dump.html'));
@@ -12,9 +12,9 @@ router.get('/', function (req, res) {
 router.get('/data', function (req, res) {
     //wholeCollData = [];
     //dumpData("testdb");
-    getWholeChat("test");
-
-    res.status(200).json(wholeCollData);
+    //getWholeChat("test");
+    getCollectionNames("test");
+    res.status(200).json(collectionArr);
 });
 
 function dumpData(DBname) {
@@ -29,23 +29,18 @@ function dumpData(DBname) {
         dbo.listCollections().toArray(function (err, collections) {
             console.log(collections);
         });
-
         db.close();
     });
 };
 
-function getCollectionNames(userName) {
-    var collectionArr = [];
+async function getCollectionNames(userName) {
+    console.log("Start of getCollectionNames");
 
-    regProfile.findOne({ userName: userName })
+    await regProfile.findOne({ userName: userName })
         .then(profileEmail => {
             if (profileEmail) {
-                collectionArr=profileEmail.chatWindow;
-                console.log(collectionArr);              
-                //call collection data display here it would work i think
-                for (let i = 0; i < collectionArr.length; i++) {
-                    getCollectionData(collectionArr[i]);
-                }
+                collectionArr = profileEmail.chatWindow;
+                //console.log(collectionArr);              
             }
             else {
                 res.status(200).json({ response: "Fail" });
@@ -53,14 +48,16 @@ function getCollectionNames(userName) {
         })
         .catch(err => console.log(err));
 
+    await console.log("End of getCollectionNames:" + collectionArr);
 }
 
-function getCollectionData(collName) {
+async function getCollectionData(collName) {
+    console.log("Start of getCollectionData");
     var MongoClient = require('mongodb').MongoClient;
     const configFile = require('./../../myUrl');
     const url = configFile.mongoURL + configFile.userName + ":" + configFile.password + configFile.restUrl;
 
-    MongoClient.connect(
+    await MongoClient.connect(
         url,
         { useNewUrlParser: true, useUnifiedTopology: true },
         (err, client) => {
@@ -83,10 +80,14 @@ function getCollectionData(collName) {
         }
     );
 
+    console.log("End of getCollectionData");
+    console.log(wholeCollData);
 };
 
-function getWholeChat(userName) {
-    getCollectionNames(userName);
+async function getWholeChat(userName) {
+    console.log("Before calling getCollectionNames");
+    await getCollectionNames(userName);
+    console.log("After calling getCollectionNames");
 }
 
 module.exports = router;

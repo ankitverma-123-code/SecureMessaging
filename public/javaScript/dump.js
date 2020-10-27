@@ -16,7 +16,6 @@ window.onload = function(){
 }
 */
 
-
 var dumpButton = document.getElementById("dumpButton");
 
 dumpButton.onclick = function () {
