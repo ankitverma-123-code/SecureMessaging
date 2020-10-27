@@ -3,7 +3,7 @@ const router = new express.Router();
 var path = require('path');
 const regProfile = require('./../models/profile');
 var wholeCollData = [];
-var collectionArr = [];
+var collectionArr;
 
 router.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + './../views/' + 'dump.html'));
@@ -13,8 +13,19 @@ router.get('/data', function (req, res) {
     //wholeCollData = [];
     //dumpData("testdb");
     //getWholeChat("test");
-    getCollectionNames("test");
-    res.status(200).json(collectionArr);
+    //console.log("collectionArr:"+collectionArr);
+    const dost = () => {
+        let var2 = getCollectionNames("test");
+    }
+
+    const callMe = async () =>{
+        var x = await dost();
+        console.log("X success:"+x);
+    }
+    
+    callMe();
+    
+    res.status(200).json("collectionArr");
 });
 
 function dumpData(DBname) {
@@ -33,31 +44,51 @@ function dumpData(DBname) {
     });
 };
 
-async function getCollectionNames(userName) {
+function getCollectionNames(userName) {
+   // new Promise((resolve, reject) => {
     console.log("Start of getCollectionNames");
+    //var localchatWindowArr;
+    async function dos(){
+    var testPromise = await regProfile.findOne({ userName: userName });
+    console.log("testPromises:"+testPromise);
+    return testPromise;
+    }
 
-    await regProfile.findOne({ userName: userName })
+    var t = dos();
+    console.log(t);
+    /*
         .then(profileEmail => {
             if (profileEmail) {
-                collectionArr = profileEmail.chatWindow;
+                localchatWindowArr = profileEmail.chatWindow; 
+                console.log(profileEmail.chatWindow);
+                //collectionArr = profileEmail.chatWindow;
+                //return profileEmail.chatWindow;
+                //resolve(collectionArr = profileEmail.chatWindow);
                 //console.log(collectionArr);              
             }
             else {
-                res.status(200).json({ response: "Fail" });
+                res.status(200).json({ response: "Fail",message:"Profile does not exists" });
+                //Fail Case
             }
         })
         .catch(err => console.log(err));
-
-    await console.log("End of getCollectionNames:" + collectionArr);
+    */
+   //console.log(testPromise.chatWindow);
+   //localchatWindowArr = testPromise.chatWindow;
+    //console.log("End of getCollectionNames:" + collectionArr);
+    //console.log("TestPromise:"+testPromise);
+    //collectionArr = testPromise.chatWindow;
+    //return localchatWindowArr;
+    //});
 }
 
-async function getCollectionData(collName) {
+function getCollectionData(collName) {
     console.log("Start of getCollectionData");
     var MongoClient = require('mongodb').MongoClient;
     const configFile = require('./../../myUrl');
     const url = configFile.mongoURL + configFile.userName + ":" + configFile.password + configFile.restUrl;
 
-    await MongoClient.connect(
+    MongoClient.connect(
         url,
         { useNewUrlParser: true, useUnifiedTopology: true },
         (err, client) => {
@@ -86,7 +117,9 @@ async function getCollectionData(collName) {
 
 async function getWholeChat(userName) {
     console.log("Before calling getCollectionNames");
-    await getCollectionNames(userName);
+    var newArr = await getCollectionNames(userName);
+    collectionArr = newArr;
+    console.log("Testing local return:"+newArr);
     console.log("After calling getCollectionNames");
 }
 
